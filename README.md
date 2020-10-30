@@ -23,8 +23,7 @@
 ### 参考资料
 
 - [实验 3：Huffman 编码和解码 - 数据结构及其算法实验](http://staff.ustc.edu.cn/~dongeliu/dsa/exp3.html)
-
 - [Huffman Coding | Greedy Algo-3 - GeeksforGeeks](https://www.geeksforgeeks.org/huffman-coding-greedy-algo-3/)
-
 - [unordered_map in C++ STL - GeeksforGeeks](https://www.geeksforgeeks.org/unordered_map-in-cpp-stl/)
 - [priority_queue - C++ Reference](http://www.cplusplus.com/reference/queue/priority_queue/)
+- 《C++ Primer Plus（第6版）中文版》

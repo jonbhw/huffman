@@ -1,18 +1,22 @@
 #include "encoder.hpp"
 
+#include <iostream>
+
 using namespace std;
 
 int main(int argc, char const *argv[])
 {
   freq_hashmap char_freq = text_file_to_frequency_hashmap("a.txt");
+  struct MinHeapNode* huffman_tree = frequency_to_huffman_tree(char_freq);
+  print_codes(huffman_tree);
   return 0;
 }
 
-freq_hashmap text_file_to_frequency_hashmap(char filename[]) {
+freq_hashmap text_file_to_frequency_hashmap(string filename) {
   freq_hashmap char_freq;
   char ch;
   ifstream fin;
-  fin.open(filename);
+  fin.open(filename.c_str());
 
   while (fin.get(ch)) {
     char_freq[ch]++;
@@ -20,4 +24,41 @@ freq_hashmap text_file_to_frequency_hashmap(char filename[]) {
 
   fin.close();
   return char_freq;
+}
+
+struct MinHeapNode* frequency_to_huffman_tree(freq_hashmap char_freq) {
+  // 先将哈希表的数据转换成一个个叶子节点存入优先队列中, 并把低频的放到前面
+  // 然后逐一合并节点, 构建 Huffman 树
+
+  // 先创建所有叶子节点
+  struct MinHeapNode *left, *right, *top;
+  priority_queue<MinHeapNode*, vector<MinHeapNode*>, compare> min_heap;
+  // 创建哈希表遍历器
+  freq_hashmap :: iterator itr;
+  // 遍历哈希表
+  for (itr = char_freq.begin(); itr != char_freq.end(); itr++) {
+    min_heap.push(new MinHeapNode(itr->first, itr->second));
+  }
+  
+  // 构建 Huffman 树
+  while (min_heap.size() != 1) {
+    left = min_heap.top();
+    min_heap.pop();
+    right = min_heap.top();
+    min_heap.pop();
+    top = new MinHeapNode('$', left->freq + right->freq);
+    top->left = left;
+    top->right = right;
+    min_heap.push(top);
+  }
+
+  return min_heap.top();
+}
+
+void print_codes(struct MinHeapNode *root, std::string str) {
+  if (!root) return;
+  if (root->data != '$')
+    cout << root->data << " : " << str << "\n";
+  print_codes(root->left, str+"0");
+  print_codes(root->right, str+"1");
 }

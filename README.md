@@ -10,13 +10,20 @@
 
 感谢 [@hexclover](https://github.com/hexclover) 耐心解答数个有关 C++ 语言的疑问，部分有意思的讨论附在下方。
 
-#### 对于 C++ 一些特性的讨论
+#### 对于 C++ 一些特性的讨论/记录
 
 > [@hexclover](https://github.com/hexclover)：将函数返回值（unordered_map 类型）作为变量的初始值时，编译器会做相应优化，避免复制一份 unordered_map。
 
 <small>下图由 @hexclover 提供。</small>
 
 <img src="https://cdn.jsdelivr.net/gh/jonbgua/jonbgua-com-picbed@master/20201030203935.jpg" style="zoom:33%;" />
+
+
+
+> 含有默认参数的形参在声明中必须放最后，且在 声明 / 定义 中选其一定义默认参数即可。
+
+- [C++ 函数的默认参数补充 - cnblogs](https://www.cnblogs.com/chenke1731/p/9651275.html)
+- [解决 Error: default argument given for parameter 2 of {FUNCTION}... 错误 - CSDN](https://blog.csdn.net/weixin_36888577/article/details/79872036)
 
 
 

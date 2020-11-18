@@ -2,8 +2,6 @@
 
 一个基于 Huffman Tree 的文本文件压缩解压器，系课程「数据结构及其算法」（210070）实验 3 之成品。
 
-
-
 ## 附录
 
 ### 致谢
@@ -18,14 +16,10 @@
 
 <img src="https://cdn.jsdelivr.net/gh/jonbgua/jonbgua-com-picbed@master/20201030203935.jpg" style="zoom:33%;" />
 
-
-
 > 含有默认参数的形参在声明中必须放最后，且在 声明 / 定义 中选其一定义默认参数即可。
 
 - [C++ 函数的默认参数补充 - cnblogs](https://www.cnblogs.com/chenke1731/p/9651275.html)
 - [解决 Error: default argument given for parameter 2 of {FUNCTION}... 错误 - CSDN](https://blog.csdn.net/weixin_36888577/article/details/79872036)
-
-
 
 ### 参考资料
 

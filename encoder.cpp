@@ -33,11 +33,10 @@ struct MinHeapNode* frequency_to_huffman_tree(freq_hashmap char_freq) {
   // 先创建所有叶子节点
   struct MinHeapNode *left, *right, *top;
   priority_queue<MinHeapNode*, vector<MinHeapNode*>, compare> min_heap;
-  // 创建哈希表遍历器
-  freq_hashmap :: iterator itr;
-  // 遍历哈希表
-  for (itr = char_freq.begin(); itr != char_freq.end(); itr++) {
-    min_heap.push(new MinHeapNode(itr->first, itr->second));
+
+  // 将哈希表转换成叶子节点
+  for (auto itr : char_freq) {
+    min_heap.push(new MinHeapNode(itr.first, itr.second));
   }
   
   // 构建 Huffman 树

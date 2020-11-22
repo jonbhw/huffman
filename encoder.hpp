@@ -43,8 +43,20 @@ typedef std::unordered_map<char, int> freq_hashmap;
 freq_hashmap text_file_to_frequency_hashmap(std::string filename);
 
 // 输出 Huffman 编码对照表
-// 通过前序遍历 Huffman Tree 的方式
+// 通过前序遍历 Huffman 树的方式
 void print_codes(struct MinHeapNode *root, std::string str = "");
 
 // 创建 Huffman 树
 struct MinHeapNode* frequency_to_huffman_tree(freq_hashmap char_freq);
+
+// 创建 ASCII 字符 -> Huffman 编码 的一一对应表 
+std::unordered_map<char, std::string> huffman_encode_table(struct MinHeapNode *root);
+
+// 在 huffman_encode_table() 内实现遍历 Huffman 树的助手函数
+//TODO: 事实上应该把这两个打包成一个类
+void huffman_encode_table_helper(
+                                  struct MinHeapNode *root,
+                                  std::unordered_map<char, std::string> &result,
+                                  std::string str = ""
+                                );
+

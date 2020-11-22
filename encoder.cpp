@@ -6,11 +6,7 @@ using namespace std;
 
 int main(int argc, char const *argv[])
 {
-  string original = "";
-  ifstream fin("a.txt");
-  fin >> original;
-  string result = huffman_encode_string_to_string(original);
-  cout << result;
+  huffman_encode("a.txt");
   return 0;
 }
 
@@ -96,4 +92,30 @@ freq_hashmap string_to_frequency_hashmap(string text) {
     char_freq[text[i]]++;
   }
   return char_freq;
+}
+
+void huffman_encode(string filename) {
+  string original = "";
+  ifstream fin(filename.c_str());
+  fin >> original;
+
+  string result = "";
+  freq_hashmap char_freq = string_to_frequency_hashmap(original);
+  struct MinHeapNode* huffman_tree = frequency_to_huffman_tree(char_freq);
+  unordered_map<char, std::string> ascii_code_table = huffman_encode_table(huffman_tree);
+  for (int i = 0; i < original.size(); i++) {
+    result += ascii_code_table[original[i]];
+  }
+
+  ofstream out_huffman_table(filename + ".hct");
+  for (auto i: ascii_code_table) {
+    out_huffman_table << i.first << " " << i.second << "\n";
+  }
+  out_huffman_table.close();
+
+  ofstream fout(filename + ".hcb", ios::binary);
+  bitset<sizeof(unsigned long) * 8> result_bits(result);
+  unsigned long binary_value = result_bits.to_ulong();
+  fout.write((const char*)&binary_value, sizeof(unsigned long));
+  fout.close();
 }

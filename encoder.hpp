@@ -13,6 +13,11 @@
 #include <queue>
 #endif
 
+#ifndef JONBGUA_BITSET
+#define JONBGUA_BITSET
+#include <bitset>
+#endif
+
 #ifndef JONBGUA_MINHEAPNODE
 #define JONBGUA_MINHEAPNODE
 struct MinHeapNode {
@@ -65,3 +70,6 @@ std::string huffman_encode_string_to_string(std::string original);
 
 // 从字符串生成 字符-频次 对应表
 freq_hashmap string_to_frequency_hashmap(std::string text);
+
+// 执行 Huffman 编码
+void huffman_encode(std::string filename);

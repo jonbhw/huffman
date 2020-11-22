@@ -60,3 +60,8 @@ void huffman_encode_table_helper(
                                   std::string str = ""
                                 );
 
+// 将原文字符串转为 Huffman 编码后的字符串(只包含 0 和 1)
+std::string huffman_encode_string_to_string(std::string original);
+
+// 从字符串生成 字符-频次 对应表
+freq_hashmap string_to_frequency_hashmap(std::string text);

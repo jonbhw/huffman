@@ -6,10 +6,11 @@ using namespace std;
 
 int main(int argc, char const *argv[])
 {
-  freq_hashmap char_freq = text_file_to_frequency_hashmap("a.txt");
-  struct MinHeapNode* huffman_tree = frequency_to_huffman_tree(char_freq);
-  unordered_map<char, std::string> ascii_code_table = huffman_encode_table(huffman_tree);
-  print_codes(huffman_tree);
+  string original = "";
+  ifstream fin("a.txt");
+  fin >> original;
+  string result = huffman_encode_string_to_string(original);
+  cout << result;
   return 0;
 }
 
@@ -77,3 +78,22 @@ void huffman_encode_table_helper(struct MinHeapNode *root, unordered_map<char, s
   huffman_encode_table_helper(root->right, result, str+"1");
 }
 
+string huffman_encode_string_to_string(string original) {
+  string encoded = "";
+  freq_hashmap char_freq = string_to_frequency_hashmap(original);
+  struct MinHeapNode* huffman_tree = frequency_to_huffman_tree(char_freq);
+  unordered_map<char, std::string> ascii_code_table = huffman_encode_table(huffman_tree);
+
+  for (int i = 0; i < original.size(); i++) {
+    encoded += ascii_code_table[original[i]];
+  }
+  return encoded;
+}
+
+freq_hashmap string_to_frequency_hashmap(string text) {
+  freq_hashmap char_freq;
+  for (int i = 0; i < text.size(); i++) {
+    char_freq[text[i]]++;
+  }
+  return char_freq;
+}

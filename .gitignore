@@ -32,4 +32,4 @@
 *.app
 
 .vscode/
-a.txt
+a.txt*

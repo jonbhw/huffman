@@ -113,9 +113,14 @@ void huffman_encode(string filename) {
   }
   out_huffman_table.close();
 
-  ofstream fout(filename + ".hcb", ios::binary);
-  bitset<sizeof(unsigned long) * 8> result_bits(result);
-  unsigned long binary_value = result_bits.to_ulong();
-  fout.write((const char*)&binary_value, sizeof(unsigned long));
-  fout.close();
+  ofstream out_encoded_string(filename + ".hcs");
+  out_encoded_string << result;
+  out_encoded_string.close();
+
+  //FIXME: 好像是不对的, 正确的做法是8bit 8bit地写
+  // ofstream fout(filename + ".hcb", ios::binary);
+  // bitset<sizeof(unsigned long) * 8> result_bits(result);
+  // unsigned long binary_value = result_bits.to_ulong();
+  // fout.write((const char*)&binary_value, sizeof(unsigned long));
+  // fout.close();
 }

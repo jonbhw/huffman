@@ -4,7 +4,7 @@
 
 using namespace std;
 
-int main(int argc, char const *argv[])
+int emain(int argc, char const *argv[])
 {
   huffman_encode("a.txt");
   return 0;

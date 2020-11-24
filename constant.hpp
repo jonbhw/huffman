@@ -1,5 +1,5 @@
 #ifndef CHAR_ACTUAL_BITS
-#define CHAR_ACTUAL_BITS 7
+#define CHAR_ACTUAL_BITS 8
 #endif
 
 #ifndef REPLACE_SLASH_N
@@ -8,5 +8,5 @@
 
 // 
 #ifndef SUB_RDBUF_OFFSET
-#define SUB_RDBUF_OFFSET 27
+#define SUB_RDBUF_OFFSET 0
 #endif

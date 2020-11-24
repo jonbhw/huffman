@@ -4,12 +4,12 @@
 
 #include <iostream>
 #include <sstream>
+#include <stdio.h>
 
 using namespace std;
 
 int main(int argc, char const *argv[]) {
   huffman_encode("a.txt");
-
   unordered_map<string, char> huffman_decode_table;
   ifstream fin_hct("a.txt.hct");
   char ch, _; string hcode;
@@ -25,24 +25,18 @@ int main(int argc, char const *argv[]) {
   fin_hct.close();
 
   string original = "";
-  ifstream fin_hcb("a.txt.hcb");
   string cp_original = "";
-  if (fin_hcb) {
-    ostringstream ss;
-    /*
-      FIXME:
-      这里的 .rdbuf() 有个严重的问题,
-      遇到 SUB 字符时(ASCII = 26), 会停下来, 导致其后的字符均无法成功 dump 进 cp_original 内.
-      酱瓜临时用加一个 SUB_RDBUF_OFFSET 的方式,
-      使得写入 hcb 文件的 ASCII 从 SUB 后开始来解决,
-      但这样会浪费相当的存储空间(基本上只用了 7bits/8bits).
-      未来可将此处的读入换成 C 语言的 getchar(), 从而可以将 OFFSET 重置为 0, CHAR_ACTUAL_BITS 设为 8,
-      充分利用 8 bits 的存储.
-     */
-    ss << fin_hcb.rdbuf();
-    cp_original = ss.str();
+  FILE *fp = fopen("a.txt.hcb", "rb");  // 使用二进制方式打开才能不在遇到 SUB 时跳回文件开头
+  //TODO: 这里读取定长字符串, 不知道在二进制方式下改为 while(!feof()) 能不能正常运作
+  for (int i = 0; i < length / CHAR_ACTUAL_BITS + 1; i++) {
+    cp_original += fgetc(fp);
   }
-  fin_hcb.close();
+  fclose(fp);
+#ifdef _DEBUG_CP_STR
+  ofstream ob1("a.txt.ob1.txt");
+  ob1 << cp_original << endl;
+  ob1.close();
+#endif  
   original = compressed_char_string_to_zero_and_one_string(cp_original);
   original = original.substr(0, length);
   string result = decode_string(original, huffman_decode_table);

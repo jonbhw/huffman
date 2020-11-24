@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <sstream>
+#include <stdio.h>
 
 #include "constant.hpp"
 
@@ -128,15 +129,13 @@ void huffman_encode(string filename) {
   out_encoded_string.close();
 
   ofstream out_binary(filename + ".hcb");
-  out_binary << zero_and_one_string_to_compressed_char_string(result);
+  string temp = zero_and_one_string_to_compressed_char_string(result);
+  FILE *fp = fopen((filename+".hcb").c_str(), "wb");
+  for (int i = 0; i < temp.length(); i++) {
+    fputc(temp[i], fp);
+  }
+  fclose(fp);
   out_binary.close();
-
-  //FIXME: 好像是不对的, 正确的做法是8bit 8bit地写
-  // ofstream fout(filename + ".hcb", ios::binary);
-  // bitset<sizeof(unsigned long) * 8> result_bits(result);
-  // unsigned long binary_value = result_bits.to_ulong();
-  // fout.write((const char*)&binary_value, sizeof(unsigned long));
-  // fout.close();
 }
 
 string zero_and_one_string_to_compressed_char_string(string bitstr) {

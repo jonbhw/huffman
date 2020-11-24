@@ -1,15 +1,11 @@
 #include "encoder.hpp"
 
 #include <iostream>
+#include <sstream>
 
 #include "constant.hpp"
 
 using namespace std;
-
-int emain(int argc, char const *argv[]) {
-  huffman_encode("a.txt");
-  return 0;
-}
 
 freq_hashmap text_file_to_frequency_hashmap(string filename) {
   freq_hashmap char_freq;
@@ -73,7 +69,7 @@ void huffman_encode_table_helper(struct MinHeapNode *root, unordered_map<char, s
   if (!root) return;
   //TODO: 之后这个 dollar 号要换掉的
   if (root->data != '$')
-    result[root->data] = str;
+      result[root->data] = str;
   huffman_encode_table_helper(root->left, result, str+"0");
   huffman_encode_table_helper(root->right, result, str+"1");
 }
@@ -101,7 +97,11 @@ freq_hashmap string_to_frequency_hashmap(string text) {
 void huffman_encode(string filename) {
   string original = "";
   ifstream fin(filename.c_str());
-  fin >> original;
+  if (fin) {
+    ostringstream ss;
+    ss << fin.rdbuf();
+    original = ss.str();
+  }
 
   string result = "";
   freq_hashmap char_freq = string_to_frequency_hashmap(original);
@@ -114,7 +114,12 @@ void huffman_encode(string filename) {
   ofstream out_huffman_table(filename + ".hct");
   out_huffman_table << result.length() << "\n";
   for (auto i: ascii_code_table) {
-    out_huffman_table << i.first << " " << i.second << "\n";
+    // 写入文件时将换行符用一个约定的不可打印字符替换掉, 方便之后的读入操作
+    if (i.first == '\n') {
+      out_huffman_table << (char)REPLACE_SLASH_N << " " << i.second << "\n";
+    }
+    else
+      out_huffman_table << i.first << " " << i.second << "\n";
   }
   out_huffman_table.close();
 
@@ -153,7 +158,7 @@ string zero_and_one_string_to_compressed_char_string(string bitstr) {
     for (j = 0; j < CHAR_SIZE; j++) {
       ch = ch * 2 + bitstr[i+j] - '0';
     }
-    result += ch;
+    result += ch + SUB_RDBUF_OFFSET;
   }
   return result;
 }

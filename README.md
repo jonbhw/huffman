@@ -30,4 +30,7 @@
 - 《C++ Primer Plus（第6版）中文版》
 - [maxtors / Huffman - GitHub](https://github.com/maxtors/Huffman/blob/master/Huffman.cpp#L182)
 - [C++ 将一个数值转化为二进制字符串 - CSDN](https://blog.csdn.net/chuoyunfei4184/article/details/100980312)
+- [Read whole ASCII file into C++ std::string](https://www.tutorialspoint.com/Read-whole-ASCII-file-into-Cplusplus-std-string)
+- [ASCII - Wikipedia](https://zh.wikipedia.org/wiki/ASCII)
+- [C++ “noskipws” is not working as expected, How to properly allow whitespace in string?](https://stackoverflow.com/questions/59904251/c-noskipws-is-not-working-as-expected-how-to-properly-allow-whitespace-in-s)
 

@@ -40,3 +40,17 @@ std::string decode_string(std::string encoded, std::unordered_map<std::string, c
   @param filename 不包含 .hcb 或 .hct 后缀的文件名
  */
 void huffman_decode(std::string filename);
+
+/* 
+  将「压缩字符串」解码为只含 0 和 1 的字符串
+  @param cstr 压缩字符串
+  @return 只含 0 和 1 的字符串
+ */
+std::string compressed_char_string_to_zero_and_one_string(std::string cstr);
+
+/* 
+  将 char 型字符转化为只含 0 和 1 的字符串
+  @param ch 一个字符
+  @return 只含 0 和 1 的字符串
+ */
+std::string char_to_zero_and_one_string(char ch);

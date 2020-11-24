@@ -2,10 +2,11 @@
 
 #include <iostream>
 
+#include "constant.hpp"
+
 using namespace std;
 
-int emain(int argc, char const *argv[])
-{
+int emain(int argc, char const *argv[]) {
   huffman_encode("a.txt");
   return 0;
 }
@@ -43,6 +44,7 @@ struct MinHeapNode* frequency_to_huffman_tree(freq_hashmap char_freq) {
     min_heap.pop();
     right = min_heap.top();
     min_heap.pop();
+    //TODO: 之后这个 dollar 号要换掉的
     top = new MinHeapNode('$', left->freq + right->freq);
     top->left = left;
     top->right = right;
@@ -54,6 +56,7 @@ struct MinHeapNode* frequency_to_huffman_tree(freq_hashmap char_freq) {
 
 void print_codes(struct MinHeapNode *root, std::string str) {
   if (!root) return;
+  //TODO: 之后这个 dollar 号要换掉的
   if (root->data != '$')
     cout << root->data << " : " << str << "\n";
   print_codes(root->left, str+"0");
@@ -68,6 +71,7 @@ unordered_map<char, std::string> huffman_encode_table(struct MinHeapNode *root) 
 
 void huffman_encode_table_helper(struct MinHeapNode *root, unordered_map<char, std::string> &result, std::string str) {
   if (!root) return;
+  //TODO: 之后这个 dollar 号要换掉的
   if (root->data != '$')
     result[root->data] = str;
   huffman_encode_table_helper(root->left, result, str+"0");
@@ -118,10 +122,38 @@ void huffman_encode(string filename) {
   out_encoded_string << result;
   out_encoded_string.close();
 
+  ofstream out_binary(filename + ".hcb");
+  out_binary << zero_and_one_string_to_compressed_char_string(result);
+  out_binary.close();
+
   //FIXME: 好像是不对的, 正确的做法是8bit 8bit地写
   // ofstream fout(filename + ".hcb", ios::binary);
   // bitset<sizeof(unsigned long) * 8> result_bits(result);
   // unsigned long binary_value = result_bits.to_ulong();
   // fout.write((const char*)&binary_value, sizeof(unsigned long));
   // fout.close();
+}
+
+string zero_and_one_string_to_compressed_char_string(string bitstr) {
+  /* 
+    压缩字符串就是说, 比如一个 char 占 8 bits, 
+    那么我就可以把 bitstr 里的 0100 0001 (十进制下是 65) 这 8 bits 转化为 'A', 放入压缩字符串中, 以此类推.
+   */
+  
+  const int CHAR_SIZE = sizeof(char) * CHAR_ACTUAL_BITS;
+  // 预处理 bitstr, 使其长度为 CHAR_SIZE 的整数倍
+  while (bitstr.length() % CHAR_SIZE) {
+    bitstr += "0";
+  }
+  // 转化开始
+  string result = "";
+  int j = 0; char ch;
+  for (int i = 0; i < bitstr.length(); i += CHAR_SIZE) {
+    ch = 0;
+    for (j = 0; j < CHAR_SIZE; j++) {
+      ch = ch * 2 + bitstr[i+j] - '0';
+    }
+    result += ch;
+  }
+  return result;
 }

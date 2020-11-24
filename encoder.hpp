@@ -73,3 +73,10 @@ freq_hashmap string_to_frequency_hashmap(std::string text);
 
 // 执行 Huffman 编码
 void huffman_encode(std::string filename);
+
+/* 
+  将只含 0 和 1 的字符串转化为「压缩字符串」。
+  @param bitstr 只含 0 和 1 的字符串
+  @return 压缩字符串
+ */
+std::string zero_and_one_string_to_compressed_char_string(std::string bitstr);

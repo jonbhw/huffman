@@ -108,6 +108,7 @@ void huffman_encode(string filename) {
   }
 
   ofstream out_huffman_table(filename + ".hct");
+  out_huffman_table << result.length() << "\n";
   for (auto i: ascii_code_table) {
     out_huffman_table << i.first << " " << i.second << "\n";
   }

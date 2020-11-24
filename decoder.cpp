@@ -14,6 +14,8 @@ int main(int argc, char const *argv[])
   unordered_map<string, char> huffman_decode_table;
   ifstream fin_hct("a.txt.hct");
   char ch; string hcode;
+  int length;
+  fin_hct >> length;
   while (fin_hct >> ch >> hcode) {
     huffman_decode_table[hcode] = ch;
   }

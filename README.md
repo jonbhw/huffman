@@ -28,3 +28,6 @@
 - [unordered_map in C++ STL - GeeksforGeeks](https://www.geeksforgeeks.org/unordered_map-in-cpp-stl/)
 - [priority_queue - C++ Reference](http://www.cplusplus.com/reference/queue/priority_queue/)
 - 《C++ Primer Plus（第6版）中文版》
+- [maxtors / Huffman - GitHub](https://github.com/maxtors/Huffman/blob/master/Huffman.cpp#L182)
+- [C++ 将一个数值转化为二进制字符串 - CSDN](https://blog.csdn.net/chuoyunfei4184/article/details/100980312)
+

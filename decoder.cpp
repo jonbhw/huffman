@@ -32,6 +32,6 @@ string compressed_char_string_to_zero_and_one_string(string cstr) {
 }
 
 string char_to_zero_and_one_string(char ch) {
-  bitset<sizeof(char)*CHAR_ACTUAL_BITS> b(ch - SUB_RDBUF_OFFSET);
+  bitset<sizeof(char)*CHAR_ACTUAL_BITS> b(ch);
   return b.to_string();
 }

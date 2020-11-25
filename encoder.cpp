@@ -159,7 +159,7 @@ string zero_and_one_string_to_compressed_char_string(string bitstr) {
     for (j = 0; j < CHAR_SIZE; j++) {
       ch = ch * 2 + bitstr[i+j] - '0';
     }
-    result += ch + SUB_RDBUF_OFFSET;
+    result += ch;
   }
   return result;
 }

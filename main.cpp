@@ -10,9 +10,10 @@ using namespace std;
 
 int main(int argc, char const *argv[]) {
   if (argc != 2) {
-    cout << "[ERROR] lack of argument(s)" << endl;
+    cout << "[ERROR] Argument Error: expected 1 but received " << argc-1 << endl;
     cout << "Press any key to quit..." << endl;
     getchar();
+    return 0;
   }
   string filename = argv[1];
   string extension_name = filename.substr(filename.length()-3, 3);

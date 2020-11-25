@@ -10,3 +10,8 @@
 #ifndef SUB_RDBUF_OFFSET
 #define SUB_RDBUF_OFFSET 0
 #endif
+
+// 默认关闭 .hcs 格式输出(即01字符串输出)
+#ifndef BITSTR_OUTPUT_FILE
+#define BITSTR_OUTPUT_FILE 0
+#endif

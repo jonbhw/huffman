@@ -124,9 +124,11 @@ void huffman_encode(string filename) {
   }
   out_huffman_table.close();
 
-  ofstream out_encoded_string(filename + ".hcs");
-  out_encoded_string << result;
-  out_encoded_string.close();
+  if (BITSTR_OUTPUT_FILE) {
+    ofstream out_encoded_string(filename + ".hcs");
+    out_encoded_string << result;
+    out_encoded_string.close();
+  }
 
   ofstream out_binary(filename + ".hcb");
   string temp = zero_and_one_string_to_compressed_char_string(result);

@@ -23,19 +23,21 @@ freq_hashmap text_file_to_frequency_hashmap(string filename) {
 }
 
 struct MinHeapNode* frequency_to_huffman_tree(freq_hashmap char_freq) {
-  // 先将哈希表的数据转换成一个个叶子节点存入优先队列中, 并把低频的放到前面
-  // 然后逐一合并节点, 构建 Huffman 树
+  /* 
+    先将哈希表的数据转换成一个个叶子节点存入优先队列中, 并把低频的放到前面
+    然后逐一合并节点, 构建 Huffman 树
+   */
 
-  // 先创建所有叶子节点
+  /* 创建所有叶子节点 */
   struct MinHeapNode *left, *right, *top;
   priority_queue<MinHeapNode*, vector<MinHeapNode*>, compare> min_heap;
 
-  // 将哈希表转换成叶子节点
+  /* 将字频表转换成叶子节点 */
   for (auto itr : char_freq) {
     min_heap.push(new MinHeapNode(itr.first, itr.second));
   }
   
-  // 构建 Huffman 树
+  /* 构建 Huffman 树 */
   while (min_heap.size() != 1) {
     left = min_heap.top();
     min_heap.pop();
@@ -93,6 +95,7 @@ freq_hashmap string_to_frequency_hashmap(string text) {
 }
 
 void huffman_encode(string filename) {
+  /* 读入待编码字符串 */
   string original = "";
   ifstream fin(filename.c_str());
   if (fin) {
@@ -100,18 +103,21 @@ void huffman_encode(string filename) {
     ss << fin.rdbuf();
     original = ss.str();
   }
-
+  /* 生成 Huffman 编码表 */
   string result = "";
-  freq_hashmap char_freq = string_to_frequency_hashmap(original);
-  struct MinHeapNode* huffman_tree = frequency_to_huffman_tree(char_freq);
+  freq_hashmap char_freq = string_to_frequency_hashmap(original);   // 字频表
+  struct MinHeapNode* huffman_tree = frequency_to_huffman_tree(char_freq);  // 由字频表生成 Huffman 树
+  // 可视化打印 Huffman 树
   if (PRINT_HUFFMAN_TREE) {
     print_tree(huffman_tree, filename + ".hct.txt");
   }
-  unordered_map<char, std::string> ascii_code_table = huffman_encode_table(huffman_tree);
+  unordered_map<char, std::string> ascii_code_table = huffman_encode_table(huffman_tree);   // 由 Huffman 树生成 Huffman 编码表
+  /* 利用 Huffman 编码表编码 */
   for (int i = 0; i < original.size(); i++) {
-    result += ascii_code_table[original[i]];
+    result += ascii_code_table[original[i]];  // result 是编码后的字符串
   }
 
+  /* 将 Huffman 编码表存入文件 */
   ofstream out_huffman_table(filename + ".hct");
   out_huffman_table << result.length() << "\n";
   for (auto i: ascii_code_table) {
@@ -124,15 +130,17 @@ void huffman_encode(string filename) {
   }
   out_huffman_table.close();
 
+  /* 将 01 字符串存入文件 */
   if (BITSTR_OUTPUT_FILE) {
     ofstream out_encoded_string(filename + ".hcs");
     out_encoded_string << result;
     out_encoded_string.close();
   }
 
+  /* 保存二进制压缩后的文件 */
   ofstream out_binary(filename + ".hcb");
-  string temp = zero_and_one_string_to_compressed_char_string(result);
-  FILE *fp = fopen((filename+".hcb").c_str(), "wb");
+  string temp = zero_and_one_string_to_compressed_char_string(result);  // 得到压缩字符串
+  FILE *fp = fopen((filename+".hcb").c_str(), "wb");  // 必须使用 C 的输出. C++ 的流输出在遇到 ␚ 字符时会出现 Bug
   for (int i = 0; i < temp.length(); i++) {
     fputc(temp[i], fp);
   }

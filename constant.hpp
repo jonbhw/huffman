@@ -10,3 +10,8 @@
 #ifndef BITSTR_OUTPUT_FILE
 #define BITSTR_OUTPUT_FILE 0
 #endif
+
+// 输出 Huffman 树的图形化形式
+#ifndef PRINT_HUFFMAN_TREE
+#define PRINT_HUFFMAN_TREE 1
+#endif

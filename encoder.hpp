@@ -80,3 +80,19 @@ void huffman_encode(std::string filename);
   @return 压缩字符串
  */
 std::string zero_and_one_string_to_compressed_char_string(std::string bitstr);
+
+/* 
+  打印 Huffman 树
+  @param root Huffman 树的根节点
+  @param filename 输出文件名(包括扩展名)
+ */
+void print_tree(struct MinHeapNode *root, std::string filename);
+
+/* 
+  实际执行打印 Huffman 树的助手函数
+  @param prefix 前缀字符串
+  @param node 当前节点
+  @param is_left 当前节点是左子树则此项为 True
+  @param filename 输出文件名(包括扩展名)
+ */
+void print_tree_helper(const std::string& prefix, struct MinHeapNode *node, bool is_left, std::string filename);

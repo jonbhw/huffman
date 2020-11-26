@@ -35,3 +35,4 @@
 - [C++ “noskipws” is not working as expected, How to properly allow whitespace in string?](https://stackoverflow.com/questions/59904251/c-noskipws-is-not-working-as-expected-how-to-properly-allow-whitespace-in-s)
 - [C 语言 getchar() 与 EOF 的关系究竟是怎样的？- 邱昊宇的回答 - 知乎](https://www.zhihu.com/question/278363419/answer/401653803)
 - [How can we detect SUB character in a file?](https://stackoverflow.com/questions/23632640/how-can-we-detect-sub-character-in-a-file)
+- [Print binary tree in a pretty way using C++](https://stackoverflow.com/questions/36802354/print-binary-tree-in-a-pretty-way-using-c)

@@ -107,6 +107,9 @@ void huffman_encode(string filename) {
   string result = "";
   freq_hashmap char_freq = string_to_frequency_hashmap(original);
   struct MinHeapNode* huffman_tree = frequency_to_huffman_tree(char_freq);
+  if (PRINT_HUFFMAN_TREE) {
+    print_tree(huffman_tree, filename + ".hct.txt");
+  }
   unordered_map<char, std::string> ascii_code_table = huffman_encode_table(huffman_tree);
   for (int i = 0; i < original.size(); i++) {
     result += ascii_code_table[original[i]];
@@ -162,4 +165,25 @@ string zero_and_one_string_to_compressed_char_string(string bitstr) {
     result += ch;
   }
   return result;
+}
+
+void print_tree(struct MinHeapNode *root, string filename) {
+  ofstream fout(filename);
+  fout << "";
+  fout.close();
+  print_tree_helper("", root, false, filename);
+}
+
+void print_tree_helper(const std::string& prefix, struct MinHeapNode *node, bool is_left, string filename) {
+  if (node != nullptr) {
+    ofstream fout(filename, ios::app);
+    fout << prefix;
+    fout << (is_left ? "├──" : "└──" );
+    // 打印该节点所代表的字符
+    //TODO: 对换行('\n')之类的字符进行特殊处理(比如就输出俩字:\n)
+    fout << node->data << endl;
+    fout.close();
+    print_tree_helper(prefix + (is_left ? "│   " : "    "), node->left, true, filename);
+    print_tree_helper(prefix + (is_left ? "│   " : "    "), node->right, false, filename);
+  }
 }

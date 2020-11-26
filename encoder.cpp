@@ -41,8 +41,7 @@ struct MinHeapNode* frequency_to_huffman_tree(freq_hashmap char_freq) {
     min_heap.pop();
     right = min_heap.top();
     min_heap.pop();
-    //TODO: 之后这个 dollar 号要换掉的
-    top = new MinHeapNode('$', left->freq + right->freq);
+    top = new MinHeapNode(CHAR_NOT_LEAF_NODE, left->freq + right->freq);
     top->left = left;
     top->right = right;
     min_heap.push(top);
@@ -53,8 +52,7 @@ struct MinHeapNode* frequency_to_huffman_tree(freq_hashmap char_freq) {
 
 void print_codes(struct MinHeapNode *root, std::string str) {
   if (!root) return;
-  //TODO: 之后这个 dollar 号要换掉的
-  if (root->data != '$')
+  if (root->data != CHAR_NOT_LEAF_NODE)
     cout << root->data << " : " << str << "\n";
   print_codes(root->left, str+"0");
   print_codes(root->right, str+"1");
@@ -68,8 +66,7 @@ unordered_map<char, std::string> huffman_encode_table(struct MinHeapNode *root) 
 
 void huffman_encode_table_helper(struct MinHeapNode *root, unordered_map<char, std::string> &result, std::string str) {
   if (!root) return;
-  //TODO: 之后这个 dollar 号要换掉的
-  if (root->data != '$')
+  if (root->data != CHAR_NOT_LEAF_NODE)
       result[root->data] = str;
   huffman_encode_table_helper(root->left, result, str+"0");
   huffman_encode_table_helper(root->right, result, str+"1");
@@ -181,7 +178,12 @@ void print_tree_helper(const std::string& prefix, struct MinHeapNode *node, bool
     fout << (is_left ? "├──" : "└──" );
     // 打印该节点所代表的字符
     //TODO: 对换行('\n')之类的字符进行特殊处理(比如就输出俩字:\n)
-    fout << node->data << endl;
+    if (node->data == CHAR_NOT_LEAF_NODE) {
+      fout << PRINT_CHAR_NOT_LEAF_NODE << endl;
+    }
+    else {
+      fout << node->data << endl;
+    }
     fout.close();
     print_tree_helper(prefix + (is_left ? "│   " : "    "), node->left, true, filename);
     print_tree_helper(prefix + (is_left ? "│   " : "    "), node->right, false, filename);

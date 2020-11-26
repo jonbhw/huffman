@@ -15,3 +15,13 @@
 #ifndef PRINT_HUFFMAN_TREE
 #define PRINT_HUFFMAN_TREE 1
 #endif
+
+// 用来标记此结点非叶子结点的字符
+#ifndef CHAR_NOT_LEAF_NODE
+#define CHAR_NOT_LEAF_NODE 26
+#endif
+
+// 非叶子结点在输出时的占位符 (此配置项仅在 PRINT_HUFFMAN_TREE 设为非零值时有效)
+#ifndef PRINT_CHAR_NOT_LEAF_NODE
+#define PRINT_CHAR_NOT_LEAF_NODE "☻"
+#endif

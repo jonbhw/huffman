@@ -15,8 +15,8 @@ int main(int argc, char const *argv[]) {
     getchar();
     return 0;
   }
-  string filename = argv[1];
-  string extension_name = filename.substr(filename.length()-3, 3);
+  string filename = argv[1];  // 待操作的文件名(包括扩展名)
+  string extension_name = filename.substr(filename.length()-3, 3);  // 提取文件扩展名(认为扩展名长度为 3)
   if (extension_name == "hcb" || extension_name == "hcs") {
     // 去掉文件名中的后缀
     filename = filename.substr(0, filename.length()-4);
@@ -35,6 +35,7 @@ int main(int argc, char const *argv[]) {
     }
     fin_hct.close();
 
+    /* 解码二进制存储的压缩文件 */
     if (extension_name == "hcb") {
       string original = "";
       string cp_original = "";
@@ -56,9 +57,10 @@ int main(int argc, char const *argv[]) {
       ob << result;
       ob.close();
     }
+    /* 解码 01 字符串存储的压缩文件 */
     else if (extension_name == "hcs") {
       ifstream fin_hcs((filename+".hcs").c_str());
-      string original = "";      
+      string original = "";
       original = "";
       fin_hcs >> original;
       fin_hcs.close();

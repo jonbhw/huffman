@@ -53,7 +53,7 @@ int main(int argc, char const *argv[]) {
       original = original.substr(0, length);
       string result = decode_string(original, huffman_decode_table);
       ofstream ob((filename+".b.txt").c_str());
-      ob << result << endl;
+      ob << result;
       ob.close();
     }
     else if (extension_name == "hcs") {

@@ -9,6 +9,7 @@
 using namespace std;
 
 int main(int argc, char const *argv[]) {
+  // 命令行参数错误
   if (argc != 2) {
     cout << "[ERROR] Argument Error: expected 1 but received " << argc-1 << endl;
     cout << "Press any key to quit..." << endl;
@@ -20,39 +21,18 @@ int main(int argc, char const *argv[]) {
   if (extension_name == "hcb" || extension_name == "hcs") {
     // 去掉文件名中的后缀
     filename = filename.substr(0, filename.length()-4);
+
     /* 读取 Huffman 解码表 */
-    unordered_map<string, char> huffman_decode_table;
-    ifstream fin_hct((filename+".hct").c_str());
-    char ch, _; string hcode;
-    int length;
-    fin_hct >> length;
-    // 修复无法读取空白字符的问题
-    while (fin_hct >> noskipws >> _ >> ch >> _ >> hcode) {
-      if (ch == REPLACE_SLASH_N)
-        huffman_decode_table[hcode] = '\n';
-      else
-        huffman_decode_table[hcode] = ch;
-    }
-    fin_hct.close();
+    int length = valid_bit_length(filename);
+    unordered_map<string, char> huffman_decode_table = hct_to_decode_table(filename, length);
 
     /* 解码二进制存储的压缩文件 */
     if (extension_name == "hcb") {
-      string original = "";
-      string cp_original = "";
-      FILE *fp = fopen((filename+".hcb").c_str(), "rb");  // 使用二进制方式打开才能不在遇到 SUB 时跳回文件开头
-      //TODO: 这里读取定长字符串, 不知道在二进制方式下改为 while(!feof()) 能不能正常运作
-      for (int i = 0; i < length / CHAR_ACTUAL_BITS + 1; i++) {
-        cp_original += fgetc(fp);
-      }
-      fclose(fp);
-#ifdef _DEBUG_CP_STR
-      ofstream ob1("a.txt.ob1.txt");
-      ob1 << cp_original << endl;
-      ob1.close();
-#endif
-      original = compressed_char_string_to_zero_and_one_string(cp_original);
-      original = original.substr(0, length);
-      string result = decode_string(original, huffman_decode_table);
+      string cpstr = hcb_to_cp_string(filename);
+      string bitstr = compressed_char_string_to_zero_and_one_string(cpstr);
+      bitstr = bitstr.substr(0, length);  // 截取有效比特
+      string result = decode_string(bitstr, huffman_decode_table);
+      /* 解码结果写入文件 */
       ofstream ob((filename+".b.txt").c_str());
       ob << result;
       ob.close();
@@ -60,12 +40,11 @@ int main(int argc, char const *argv[]) {
     /* 解码 01 字符串存储的压缩文件 */
     else if (extension_name == "hcs") {
       ifstream fin_hcs((filename+".hcs").c_str());
-      string original = "";
-      original = "";
-      fin_hcs >> original;
+      string bitstr = "";
+      fin_hcs >> bitstr;
       fin_hcs.close();
-      original = original.substr(0, length);
-      string result = decode_string(original, huffman_decode_table);
+      bitstr = bitstr.substr(0, length);
+      string result = decode_string(bitstr, huffman_decode_table);
       ofstream os((filename+".s.txt").c_str());
       os << result << endl;
       os.close();

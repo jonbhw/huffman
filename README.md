@@ -123,7 +123,7 @@ std::unordered_map<std::string, char>
    1. 「压缩字符串」→ `*.hcb` （**H**uffman en**C**oded **B**inary file）
    2. 「01 字符串」→ `*.hcs` 【默认关闭】（**H**uffman en**C**oded **S**tring file）
 
-#### 解码
+#### 解码（解压缩）
 
 从二进制文件 `*.hcb` 解压缩。
 

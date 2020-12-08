@@ -2,6 +2,142 @@
 
 一个基于 Huffman Tree 的文本文件压缩解压器，系课程「数据结构及其算法」（210070）实验 3 之成品。
 
+[项目地址](https://github.com/JiangGua/210070-huffman)
+
+
+
+## 使用方法
+
+### Windows
+
+#### 编码（压缩）
+
+将需要压缩的文本文件拖拽到本程序的程序图标上（比如是 `huffman.exe`），松开鼠标，程序会在文本文件所在目录下生成 `*.hcb` 和 `*.hct` 两个文件，前者为二进制压缩后的文件，后者为 Huffman 解码表。
+
+可能会生成 `*.hct.txt` 文件（随 `constant.hpp` 中的设置不同而变化），此为 Huffman 树的可视化输出。
+
+#### 解码（解压缩）
+
+将 `*.hcb` 和 `*.hct` 两个文件放在同一目录下，将 `*.hcb` 文件拖拽到本程序的程序图标上，程序会在文件所在目录下生成 `*.b.txt` 文件，意即「从二进制压缩后的文件解码而来的文本文件」。
+
+`*.b.txt` 文件内容应与原来的 `*.*` 的内容完全一致。
+
+#### 动图演示
+
+![Windows 下编解码过程](https://cdn.jsdelivr.net/gh/jonbgua/jonbgua-com-picbed@master/20201208215553.gif)
+
+
+
+## 项目结构
+
+本项目依照尽可能模块化的原则构建。
+
+```
+.
+├── constant.hpp	# 全局变量
+├── main.cpp		# 主程序
+├── encoder.hpp		# 编码模块
+├── encoder.cpp
+├── decoder.hpp		# 解码模块
+├── decoder.cpp
+```
+
+
+
+## 实现细节
+
+### 主要数据结构
+
+1. 字符频率表
+2. Huffman 树
+3. Huffman 编码表
+4. Huffman 解码表
+
+#### 字符频率表
+
+```c++
+typedef std::unordered_map<char, int> freq_hashmap;
+```
+
+一个无序哈希表，类似 Python 的字典。每个字符 `<char>` 对应一个频率 `<int>`。
+
+#### Huffman 树
+
+##### 节点
+
+```c++
+struct MinHeapNode {
+  // 若为「合成节点」, 则此项为 CHAR_NOT_LEAF_NODE (constant.hpp 中定义)
+  char data;
+  unsigned freq;
+  MinHeapNode *left, *right;
+
+  MinHeapNode(char data, unsigned freq) {
+    left = right = NULL;
+    this->data = data;
+    this->freq = freq;
+  }
+};
+```
+
+##### 节点们
+
+各节点的指针存在一个优先队列中，优先队列按 `freq` 从小到大排序。
+
+#### Huffman 编码表
+
+用于将文本字符串编码为「01 字符串」（只含有 0 和 1 的字符串）。
+
+```c++
+std::unordered_map<char, std::string>
+```
+
+每个 `<char>` 对应一个只含 0 和 1 的 `<std::string>`（Huffman 编码）。
+
+#### Huffman 解码表
+
+与 Huffman 编码表的作用相反，用于将「01 字符串」解码为文本字符串。
+
+```c++
+std::unordered_map<std::string, char>
+```
+
+
+
+### 运行流程
+
+#### 编码（压缩）
+
+1. 从文件中读入待编码字符串
+2. 生成 Huffman 编码表
+   1. 生成字符频率表
+   2. 生成 Huffman 树
+   3. 生成 Huffman 编码表
+3. 保存 Huffman 编码表
+   1. 将 Huffman 编码表存入文件 `*.hct`（**H**uffman en**C**oding **T**able）
+   2. 可视化打印 Huffman 树（`*.hct.txt`）
+4. 利用 Huffman 编码表编码
+   1. 文本字符串 → 01 字符串
+   2. 01 字符串 →「压缩字符串」（01 字符串中每 8 位的 0 和 1 压缩成一个 char 型字符）
+5. 保存结果
+   1. 「压缩字符串」→ `*.hcb` （**H**uffman en**C**oded **B**inary file）
+   2. 「01 字符串」→ `*.hcs` 【默认关闭】（**H**uffman en**C**oded **S**tring file）
+
+#### 解码
+
+从二进制文件 `*.hcb` 解压缩。
+
+1. 从文件中读入
+   1. 读取 Huffman 解码表 `*.hct`
+   2. 读取 `*.hcb`
+2. 利用 Huffman 解码表解码
+   1. 「压缩字符串」→ 01 字符串
+   2. 01 字符串 → 文本字符串
+3. 保存结果
+   1. 文本字符串 → `*.b.txt`
+
+
+
 ## 附录
 
 ### 致谢

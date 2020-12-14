@@ -2,7 +2,7 @@
 
 一个基于 Huffman Tree 的文本文件压缩解压器，系课程「数据结构及其算法」（210070）实验 3 之成品。
 
-[项目地址](https://github.com/JiangGua/210070-huffman)
+[项目地址](https://github.com/JiangGua/210070-huffman) | [国内镜像 (Gitlab@LUG)](https://git.lug.ustc.edu.cn/JiangGua/210070-huffman) | [下载地址](https://github.com/JiangGua/210070-huffman/releases/latest) | [下载地址 (Gitlab@LUG)](https://git.lug.ustc.edu.cn/JiangGua/210070-huffman/-/releases)
 
 
 

@@ -172,3 +172,6 @@ std::unordered_map<std::string, char>
 - [C 语言 getchar() 与 EOF 的关系究竟是怎样的？- 邱昊宇的回答 - 知乎](https://www.zhihu.com/question/278363419/answer/401653803)
 - [How can we detect SUB character in a file?](https://stackoverflow.com/questions/23632640/how-can-we-detect-sub-character-in-a-file)
 - [Print binary tree in a pretty way using C++](https://stackoverflow.com/questions/36802354/print-binary-tree-in-a-pretty-way-using-c)
+- [几种 MingW 使用记录 - k1988](https://baba.zhaoxiuyuan.com/2017/09/121_mingw_record/)
+- [TDM-GCC](https://jmeubank.github.io/tdm-gcc/)
+  - 原生支持 32 & 64 位编译，且编译后的程序能在各种平台下运行而不需要配置依赖库。32 位模式编译的程序在 Windows XP SP3 下运行正常。

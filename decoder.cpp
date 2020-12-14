@@ -69,9 +69,10 @@ string hcb_to_cp_string(string filename, int length) {
   return cp_original;
 }
 
-int bit_length(string filename) {
+int valid_bit_length(string filename) {
   ifstream fin_hct((filename+".hct").c_str());  
   int l;
   fin_hct >> l;
   fin_hct.close();
+  return l;
 }

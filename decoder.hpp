@@ -17,9 +17,8 @@
   从 .hct 文件中读取 Huffman 解码表
   @param filename 不包含 .hct 的文件名
   @return 字符串->字符对应表
-  @return length 有效比特数
  */
-std::unordered_map<std::string, char> hct_to_decode_table(std::string filename, int &length);
+std::unordered_map<std::string, char> hct_to_decode_table(std::string filename);
 
 /* 
   读取二进制 .hcb 文件并将其转换为字符串
@@ -59,9 +58,10 @@ std::string char_to_zero_and_one_string(char ch);
 /* 
   从 .hcb 文件中读取压缩字符串
   @param filename 不包含 .hcb 后缀的文件名
+  @param length 有效比特数
   @return 压缩字符串(cp_string)
  */
-std::string hcb_to_cp_string(std::string filename);
+std::string hcb_to_cp_string(std::string filename, int length);
 
 /* 
   读取有效比特数

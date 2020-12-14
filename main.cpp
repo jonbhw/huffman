@@ -24,11 +24,11 @@ int main(int argc, char const *argv[]) {
 
     /* 读取 Huffman 解码表 */
     int length = valid_bit_length(filename);
-    unordered_map<string, char> huffman_decode_table = hct_to_decode_table(filename, length);
+    unordered_map<string, char> huffman_decode_table = hct_to_decode_table(filename);
 
     /* 解码二进制存储的压缩文件 */
     if (extension_name == "hcb") {
-      string cpstr = hcb_to_cp_string(filename);
+      string cpstr = hcb_to_cp_string(filename, length);
       string bitstr = compressed_char_string_to_zero_and_one_string(cpstr);
       bitstr = bitstr.substr(0, length);  // 截取有效比特
       string result = decode_string(bitstr, huffman_decode_table);

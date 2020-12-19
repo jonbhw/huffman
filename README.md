@@ -2,7 +2,7 @@
 
 一个基于 Huffman Tree 的文本文件压缩解压器，系课程「数据结构及其算法」（210070）实验 3 之成品。
 
-[项目地址](https://github.com/JiangGua/210070-huffman) | [国内镜像 (Gitlab@LUG)](https://git.lug.ustc.edu.cn/JiangGua/210070-huffman) | [下载地址](https://github.com/JiangGua/210070-huffman/releases/latest) | [下载地址 (Gitlab@LUG)](https://git.lug.ustc.edu.cn/JiangGua/210070-huffman/-/releases)
+[项目地址](https://github.com/JiangGua/210070-huffman) | [国内镜像 (Gitlab@LUG)](https://git.lug.ustc.edu.cn/JiangGua/210070-huffman) | [下载地址](https://github.com/JiangGua/210070-huffman/releases/latest) | [下载地址 (国内)](https://git.lug.ustc.edu.cn/JiangGua/210070-huffman/-/releases)
 
 
 
@@ -24,6 +24,8 @@
 
 #### 动图演示
 
+如果您是 PDF 阅读者，可以 [在这里下载 [GIF]](https://cdn.jsdelivr.net/gh/jonbgua/jonbgua-com-picbed@master/20201208215553.gif)。
+
 ![Windows 下编解码过程](https://cdn.jsdelivr.net/gh/jonbgua/jonbgua-com-picbed@master/20201208215553.gif)
 
 
@@ -32,14 +34,14 @@
 
 本项目依照尽可能模块化的原则构建。
 
-```
+```python
 .
 ├── constant.hpp	# 全局变量
 ├── main.cpp		# 主程序
-├── encoder.hpp		# 编码模块
-├── encoder.cpp
-├── decoder.hpp		# 解码模块
-├── decoder.cpp
+├── encoder.hpp		
+├── encoder.cpp		# 编码模块
+├── decoder.hpp		
+├── decoder.cpp		# 解码模块
 ```
 
 
